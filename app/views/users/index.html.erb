@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="depabox">
+                <h2>社長</h2>
+                <ul>
+                    <% @departments.each do |department| %>
+                        <% if department.department == "社長" %>
+                            <li type="none"><a href="<%= "/show/#{department.user.id}" %>"><%= department.user.name %></a></li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </div>
+            <div class="depabox">
+                <h2>人事部</h2>
+                <ul>
+                    <% @departments.each do |department| %>
+                        <% if department.department == "人事部" %>
+                            <li type="none"><a href="<%= "/show/#{department.user.id}" %>"><%= department.user.name %></a></li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </div>
+            <div class="depabox">
+                <h2>EC事業部</h2>
+                <ul>
+                    <% @departments.each do |department| %>
+                        <% if department.department == "EC事業部" %>
+                            <li type="none"><a href="<%= "/show/#{department.user.id}" %>"><%= department.user.name %></a></li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </div>
+            <div class="depabox">
+                <h2>SES事業部</h2>
+                <ul>
+                    <% @departments.each do |department| %>
+                        <% if department.department == "SES事業部" %>
+                            <li type="none"><a href="<%= "/show/#{department.user.id}" %>"><%= department.user.name %></a></li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </div>
+        </div>
+    </body>
+
+

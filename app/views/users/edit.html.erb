@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1><%= @user.name %></h1>
+            <%= form_tag("/update/#{@user.id}") do %>
+                <a>パスワード</a><br>
+                <input class=signup placeholder="********" name="password" type="password" value="<%= @user.password %>">
+                
+                <input class="button_signup" type="submit" value="変更">
+            <% end %>
+        </div>
+    </body>
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Task</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <div class="header">
+      <img src="/assets/logo.jpg">
+    </div>
+  </head>
+
+  <body>
+    <% if flash[:notice] %>
+      <div id="notice" class="flash">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    
+    <%= yield %>
+  </body>
+  
+  <script>
+    let x = document.getElementById('notice');
+    x.classList.add('fadeOut');
+    x.addEventListener('animationend', function() {
+      this.classList.add('ended');
+    });
+  
+  </script>
+</html>

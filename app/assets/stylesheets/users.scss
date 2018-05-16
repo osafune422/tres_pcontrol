@@ -1,0 +1,73 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/* カラム全体 */
+#wrapper{
+    position:absolute;
+    top:50px;
+    width:1050px;
+    right:0;
+    left:0;
+    margin:0 auto;
+    height:100%;
+//    background-color:gray;
+}
+
+.depabox{
+    float:left;
+    width: 32%;
+    height: 350px;
+    margin: 0 5px 10px 5px;
+//    background-color:white;
+}
+
+.depabox h2{
+    color: gray;
+}
+
+.depabox a{
+    color: black;
+    text-decoration: none;
+}
+.depabox a:hover{
+    color: salmon;
+}
+
+.signup{
+    width:20%;
+    height:30px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.signup_name{
+    width:40%;
+    height:45px;
+    font-size: 25px;
+    border-radius: 5px;
+}
+
+.signup_address{
+    width:60%;
+    height:30px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.button_signup{
+  font-size: 15px;
+  padding: 10px 100px;
+  background-color: #59b1eb;
+  color: #fff;
+  border-style: none;
+  border-radius: 5px; /*丸み*/
+  margin: 15px 0px;
+}
+.button_signup:hover{
+  background-color: #B0E0E6;
+}
+
+
+
+
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <br><br>
+            <%= form_tag("/control/update/#{@user.id}") do %>
+                <input class="signup_name" placeholder="名前" name="name" value="<%= @user.name %>"><br><br>
+                <a>部署</a><br>
+                <% i=1 %>
+                <% @departments.each do |department|%>
+                    <% if i == 1 %>
+                        <a><%= department.department %> <%= department.position %>→</a>
+                        <input class="signup" name="department1" value="<%= department.department %>">
+                        <input class="signup" name="position1" value="<%= department.position %>"><br>
+                    <% elsif i == 2 %>
+                        <input class="signup" name="department2" value="<%= department.department %>">
+                        <input class="signup" name="position2" value="<%= department.position %>"><br>
+                    <% else %>
+                        <input class="signup" name="department3" value="<%= department.department %>">
+                        <input class="signup" name="position3" value="<%= department.position %>"><br>
+                    <% end %>
+                    <% i += 1 %>
+                <% end %>
+                <a>新規部署登録</a><br>
+                <input class="signup" name="department4">
+                <input class="signup" name="position4"><br>
+                
+                <br>
+                <a>住所</a><br>
+                <input class="signup_address" name="address" value="<%= @user.address %>"><br>
+                
+                <input class="button_signup" type="submit" value="変更">
+            <% end %>
+        </div>
+    </body>
+
+
