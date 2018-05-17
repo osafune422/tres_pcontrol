@@ -5,12 +5,18 @@
     </head>
     <body>
         <div id="wrapper">
+            
+            
             <h1><%= @user.name %></h1>
             <a><%= p format("%04d",@user.number) %></a><br>
             <% @user.departments.each do |department| %>
                 <a><%= department.department %> <%= department.position %></a><br>
             <% end %>
             <p><%= @user.address %></p>
+            
+            <div class="changebox">
+                
+            </div>
         </div>
     </body>
 

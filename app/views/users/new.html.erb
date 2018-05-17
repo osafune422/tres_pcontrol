@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <h3>新入社員登録</h3>
+
+            <% @user.errors.full_messages.each do |message| %>
+                <div class="form-error">
+                    <%= message %>
+                </div>
+            <% end %>
+
+            <%= form_tag("/create") do %>
+                <a>氏名</a><br>
+                <input class=signup_name name="name" value="<% @user.name %>"><br><br>
+                <a>社員ナンバー</a><br>
+                <input class=signup name="number" value="<% @user.number %>"><br>
+                <a>パスワード</a><br> 
+                <input class=signup placeholder="********" name="password" type="password" value="<% @user.password %>"><br><br>
+                <a>配属部署</a><br>
+                <input class=signup name="department" value="<% @department.department %>">
+                <input class=signup name="position" value="<% @department.position %>"><br><br>
+                <a>住所</a><br>
+                <input class=signup_address name="address" value="<% @user.address%>"><br>
+    
+                <input class="button_signup" type="submit" value="登録">
+            <% end %>
+    
+            <%= link_to("ログイン", "/login") %>
+        </div>
+    </body>
+
+

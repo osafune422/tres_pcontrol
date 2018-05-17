@@ -3,6 +3,70 @@ class UsersController < ApplicationController
     @user = User.find_by(id:params[:id])
   end
   
+  def new
+    @user = User.new
+    @department=Department.new
+  end
+  
+  def create
+    @user = User.new(
+      name: params[:name], 
+      number: params[:number],
+      password: params[:password],
+      address: params[:address]
+      )
+
+    if @user.save
+      session[:user_id]=@user.id
+      
+      @department = Department.new(
+        user_id: @user.id,
+        department: params[:department],
+        position: params[:position]
+        )
+        
+      if @department.department == "社長" || @department.department == "人事部" || @department.position == "部長"
+        @user.authority = 1
+      else
+        @user.authority = 0
+      end
+        
+      if @user.save && @department.save
+        flash[:notice] = "ユーザー登録が完了しました"
+        redirect_to("/show/#{@user.id}")
+      else
+        render("users/new")
+      end
+    else
+      render("users/new")
+    end
+  end
+  
+  def login_form
+    
+  end
+  
+  def login
+    @user=User.find_by(number: params[:number])
+   
+    if @user && @user.authenticate(params[:password])
+      session[:user_id]=@user.id
+      flash[:notice]="ログインしました"
+      redirect_to("/mypage/#{@user.id}")
+    else
+      @error_message="社員番号またはパスワードが間違っています"
+      @number=params[:number]
+      @password=params[:password]
+      render("users/login_form")
+    end
+  end
+  
+  def logout
+    session[:user_id]=nil
+    flash[:notice]="ログアウトしました"
+    redirect_to("/login")
+  end
+  
   def index
     @departments = Department.all
   end
@@ -27,10 +91,37 @@ class UsersController < ApplicationController
     end
   end
   
+  def destroy
+    @department = Department.find_by(id: params[:id])
+    @user = User.find_by(id: @department.user_id)
+    @department.destroy
+    flash[:notice] = "削除しました"
+    redirect_to("/show/#{@user.id}")
+  end
+  
   def edit_c
-    @user = User.find_by(id:params[:id])
-    @departments = @user.departments
+    @user = User.find_by(id: params[:id])
+  end
+  
+  def edit_depa
+    @department=Department.find_by(id: params[:id])
+  end
+  
+  def update_depa
+    @department = Department.find_by(id: params[:id])
+    @department.department = params[:department]
+    @department.position = params[:position]
     
+    if @department.department == "社長" || @department.department == "人事部" || @department.position == "部長"
+      @department.user.authority = "1"
+    end
+    
+    if @department.save
+      flash[:notice] = "配属部署を編集しました"
+      redirect_to("/control/edit/#{@department.user.id}")
+    else
+      render("users/edit_depa")
+    end
   end
   
   def update_c
@@ -38,80 +129,29 @@ class UsersController < ApplicationController
     @user.name = params[:name]
     @user.address = params[:address]
     
-    @departments = @user.departments
-    i = 1
-    @departments.each do |department|
-      if i == 1
-        @department1 = department
-      elsif i == 2
-        @department2 = department
-      else
-        @department3 = department
-      end 
-      i += 1
-    end
-    
-    @department1.department = params[:department1]
-    @department1.position = params[:position1]
-    if @department2 != nil
-      @department2.department = params[:department2]
-      @department2.position = params[:position2]
-      if @department3 != nil
-        @department3.department = params[:department3]
-        @department3.position = params[:position3]
+    if params[:department5] != nil
+      if params[:department5] == "社長" || params[:department5] == "人事部" || params[:position5] == "部長"
+        @user.authority = "1"
       end
-    end
-    
-    if params[:department4] != nil
-      @department4 = Department.new(
-        user_id: @user.id,
-        department: params[:department4],
-        position: params[:position4])
       
-      if @department2 == nil
-        if @user.save && @department1.save && @department4.save
-          flash[:notice] = "ユーザー情報を編集しました"
-          redirect_to("/mypage/#{@user.id}")
-        else
-          render("users/edit_c")
-        end
-      elsif @department2 != nil && @department3 == nil
-        if @user.save && @department1.save && @department2.save && @department4.save
-          flash[:notice] = "ユーザー情報を編集しました"
-          redirect_to("/mypage/#{@user.id}")
-        else
-          render("users/edit_c")
-        end
+      @department5 = Department.new(
+        user_id: @user.id,
+        department: params[:department5],
+        position: params[:position5]
+        )
+      
+      if @user.save && @department5.save
+        flash[:notice] = "社員情報を編集しました"
+        redirect_to("/show/#{@user.id}")
       else
-        if @user.save && @department1.save && @department2.save && @department3.save && @department4.save
-          flash[:notice] = "ユーザー情報を編集しました"
-          redirect_to("/mypage/#{@user.id}")
-        else
-          render("users/edit_c")
-        end
+        render("users/edit_c")
       end
     else
-      if @department2 == nil
-        if @user.save && @department1.save
-          flash[:notice] = "ユーザー情報を編集しました"
-          redirect_to("/mypage/#{@user.id}")
-        else
-          render("users/edit_c")
-        end
-      elsif @department2 != nil && @department3 == nil
-        if @user.save && @department1.save && @department2.save
-          flash[:notice] = "ユーザー情報を編集しました"
-          redirect_to("/mypage/#{@user.id}")
-        else
-          render("users/edit_c")
-        end
+      if @user.save
+        flash[:notice] = "社員情報を編集しました"
+        redirect_to("/show/#{@user.id}")
       else
-        if @user.save && @department1.save && @department2.save && @department3.save
-          flash[:notice] = "ユーザー情報を編集しました"
-          redirect_to("/mypage/#{@user.id}")
-        else
-          render("users/edit_c")
-        end
+        render("users/edit_c")
       end
     end
   end

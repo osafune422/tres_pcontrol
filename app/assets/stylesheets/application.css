@@ -31,10 +31,30 @@
     height: 50px;
 }
 
+.header-right {
+  float: right;
+  margin-right: 50px;
+  transition:all 0.5s;
+}
+
+.header-right:hover {
+  background-color: salmon;
+}
+
+/* header-rightの中の<a>のCSSを指定してください */
+.header-right a{
+  line-height:50px;
+  text-decoration: none;
+  padding:0px 15px;
+  color:black;
+  display:block;
+}
+
+
 .flash {
     padding: 20px 0;
-    color: gray;
-    background: white;
+    color: white;
+    background: rgb(251, 170, 88);
     text-align: center;
     position: absolute;
     top: 50px;

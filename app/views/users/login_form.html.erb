@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <h3>ログイン</h3>
+            <hr class=straghtline>
+                
+            <% if @error_message %>
+                <div class="form-error">
+                    <%= @error_message %>
+                </div>
+            <% end %>
+
+            <%= form_tag("/login") do %>
+                <br>
+                <input class=signup_name placeholder="社員番号" name="number"><br>
+                <input class=signup_name placeholder="パスワード" name="password" type="password"><br>
+                
+                <input class="button_signup" type="submit" value="ログイン">
+            <% end %>
+    
+        </div>
+    </body>
+
+

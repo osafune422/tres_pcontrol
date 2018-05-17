@@ -13,6 +13,7 @@
 //    background-color:gray;
 }
 
+/* index */
 .depabox{
     float:left;
     width: 32%;
@@ -33,6 +34,7 @@
     color: salmon;
 }
 
+/* edit */
 .signup{
     width:20%;
     height:30px;
@@ -67,7 +69,42 @@
   background-color: #B0E0E6;
 }
 
+.changebox{
+    float: right;
+    width: 32%;
+    height: 350px;
+    margin: 15px 5px 10px 5px;
+    box-shadow: 0px 3px 10px -3px black;
+    background-color: floralwhite;
+}
 
+.inchangebox{
+    position: relative;
+    width: 90%;
+    height: 320px;
+    top: 15px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+//    background-color: white;
+}
 
+.form-error {
+  color: #ff4d75;
+}
 
+.straghtline {
+   border-width: 1px 0px 0px 0px; /* 太さ */
+   border-style: solid;
+   border-color: gray;
+   height: 1px;        
+}
+
+.link a{
+    color: black;
+    text-decoration: none;
+}
+.link a:hover{
+    color: salmon;
+}
 

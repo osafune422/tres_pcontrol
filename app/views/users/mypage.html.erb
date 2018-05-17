@@ -5,11 +5,22 @@
     </head>
     <body>
         <div id="wrapper">
-            <h1><%= @user.name %></h1>
-            <% @user.departments.each do |department| %>
+            <% if @current_user.authority == 1 %>
+                <div class="changebox">
+                    <div class="inchangebox">
+                            <li><a href="/index">社員一覧</a></li>
+                        
+                    </div>
+                </div>
+            <% end %>
+            
+            <h1><%= @current_user.name %></h1>
+            <% @current_user.departments.each do |department| %>
                 <a><%= department.department %> <%= department.position %></a><br>
             <% end %>
-            <p><%= @user.address %></p>
+            <p><%= @current_user.address %></p>
+            
+            
         </div>
     </body>
 

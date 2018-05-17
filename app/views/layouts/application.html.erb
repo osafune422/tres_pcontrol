@@ -8,7 +8,21 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <div class="header">
-      <img src="/assets/logo.jpg">
+      <% if @current_user == nil %>
+        <img src="/assets/logo.jpg">
+      <% else %>
+        <a href="<%= "/mypage/#{@current_user.id}" %>"><img src="/assets/logo.jpg"></a>
+      <% end %>
+      
+      <div class="header-right">
+        <% if @current_user == nil %>
+          <a href="/login">ログイン</a>
+        <% else %>
+          <%= link_to("/logout", {method: "post"}) do %>
+            <i>ログアウト</i>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </head>
 

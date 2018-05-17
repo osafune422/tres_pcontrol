@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <p><%= @department.department %>　<%= @department.position %></p>
+            <h3>↓</h3>
+            <%= form_tag("/depa/update/#{@department.id}") do %>
+                <input class=signup name="department" value="<%= @department.department %>">
+                <input class=signup name="position" value="<%= @department.position %>"><br><br>
+                
+                <input class="button_signup" type="submit" value="変更">
+            <% end %>
+        </div>
+    </body>
+
+
