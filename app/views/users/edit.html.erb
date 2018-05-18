@@ -5,8 +5,14 @@
     </head>
     <body>
         <div id="wrapper">
-            <%= form_tag("/update/#{@user.id}") do %>
-                <br><br>
+            <br>
+            <% @user.errors.full_messages.each do |message| %>
+                <div class="form-error">
+                <%= message %>
+                </div>
+            <% end %>
+            
+            <%= form_tag("/update") do %>
                 <input class="signup_name" placeholder="名前" name="name" value="<%= @user.name %>"><br>
                 
                 <a>パスワード</a><br>

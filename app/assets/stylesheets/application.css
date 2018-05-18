@@ -76,9 +76,9 @@
 	}
 }
 .fadeOut {
-	animation: fadeOut 3s ease;
-	animation-delay: 3s;
-	animation-duration: 1s;
+	animation: fadeOut 1s ease;
+	animation-delay: 1s;
+	animation-duration: 0.8s;
 }
 .fadeOut.ended {
 	display: none;

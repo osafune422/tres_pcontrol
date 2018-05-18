@@ -89,6 +89,14 @@
 //    background-color: white;
 }
 
+.inchangebox a{
+    color: black;
+    text-decoration: none;
+}
+.inchangebox a:hover{
+    color: salmon;
+}
+
 .form-error {
   color: #ff4d75;
 }

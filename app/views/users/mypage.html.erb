@@ -5,14 +5,15 @@
     </head>
     <body>
         <div id="wrapper">
-            <% if @current_user.authority == 1 %>
-                <div class="changebox">
-                    <div class="inchangebox">
-                            <li><a href="/index">社員一覧</a></li>
-                        
-                    </div>
+            <div class="changebox">
+                <div class="inchangebox">
+                    <% if @current_user.authority == 1 %>
+                        <li><a href="/index">社員一覧</a></li>
+                    <% else %>
+                        <li><a href="/edit">編集</a></li>
+                    <% end %>                    
                 </div>
-            <% end %>
+            </div>
             
             <h1><%= @current_user.name %></h1>
             <% @current_user.departments.each do |department| %>

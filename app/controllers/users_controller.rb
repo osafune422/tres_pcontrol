@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user, {only:[:mypage, :edit, :new]}       #ログインなしの時
+  before_action :forbid_login_user, {only:[:login_form, :login]}       #ログインありの時
+  before_action :ensure_correct_user, {only:[:new, :create, :index, :show, :destroy, :edit_depa, :update_depa]}      #管理者でないログインの時
+  
   def mypage
-    @user = User.find_by(id:params[:id])
+    @user = User.find_by(id: @current_user.id)
   end
   
   def new
@@ -52,7 +56,7 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params[:password])
       session[:user_id]=@user.id
       flash[:notice]="ログインしました"
-      redirect_to("/mypage/#{@user.id}")
+      redirect_to("/mypage")
     else
       @error_message="社員番号またはパスワードが間違っています"
       @number=params[:number]
@@ -76,18 +80,18 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @user = User.find_by(id:params[:id])
+    @user = User.find_by(id: @current_user.id)
   end
   
   def update
-    @user = User.find_by(id: params[:id])
+    @user = User.find_by(id: @current_user.id)
     @user.name = params[:name]
     @user.password = params[:password]
     @user.address = params[:address]
     
     if @user.save
       flash[:notice] = "ユーザー情報を編集しました"
-      redirect_to("/mypage/#{@user.id}")
+      redirect_to("/mypage")
     else
       render("users/edit")
     end
@@ -119,6 +123,13 @@ class UsersController < ApplicationController
       redirect_to("/show/#{@department.user.id}")
     else
       render("users/edit_depa")
+    end
+  end
+  
+  def ensure_correct_user
+    if @current_user.authority != 1
+      flash[:notice] = "アクセス権限がありません"
+      redirect_to("/mypage")
     end
   end
   

@@ -5,7 +5,12 @@
     </head>
     <body>
         <div id="wrapper">
-            
+            <div class="changebox">
+                <div class="inchangebox">
+                    <li><a href="/index">社員一覧</a></li>
+                                      
+                </div>
+            </div>
             
             <h1><%= @user.name %></h1>
             <a><%= p format("%04d",@user.number) %></a><br>
@@ -14,9 +19,7 @@
             <% end %>
             <p><%= @user.address %></p>
             
-            <div class="changebox">
-                
-            </div>
+            
         </div>
     </body>
 

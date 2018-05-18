@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  get 'mypage/:id', to:'users#mypage'
+  get 'mypage', to:'users#mypage'
   get 'index', to:'users#index'
   get 'show/:id', to:'users#show'
-  get 'edit/:id', to:'users#edit'
-  post 'update/:id', to:'users#update'
+  get 'edit', to:'users#edit'
+  post 'update', to:'users#update'
   get 'depa/edit/:id', to:'users#edit_depa'
   post 'depa/update/:id', to:'users#update_depa'
   post 'destroy/:id', to: 'users#destroy'
