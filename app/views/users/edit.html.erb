@@ -5,10 +5,16 @@
     </head>
     <body>
         <div id="wrapper">
-            <h1><%= @user.name %></h1>
             <%= form_tag("/update/#{@user.id}") do %>
+                <br><br>
+                <input class="signup_name" placeholder="名前" name="name" value="<%= @user.name %>"><br>
+                
                 <a>パスワード</a><br>
-                <input class=signup placeholder="********" name="password" type="password" value="<%= @user.password %>">
+                <input class=signup placeholder="********" name="password" type="password" value="<%= @user.password %>"><br>
+                
+                <a>住所</a><br>
+                <input class="signup_address" name="address" value="<%= @user.address %>"><br>
+                
                 
                 <input class="button_signup" type="submit" value="変更">
             <% end %>

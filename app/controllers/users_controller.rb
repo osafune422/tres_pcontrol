@@ -81,7 +81,9 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find_by(id: params[:id])
+    @user.name = params[:name]
     @user.password = params[:password]
+    @user.address = params[:address]
     
     if @user.save
       flash[:notice] = "ユーザー情報を編集しました"
@@ -99,10 +101,6 @@ class UsersController < ApplicationController
     redirect_to("/show/#{@user.id}")
   end
   
-  def edit_c
-    @user = User.find_by(id: params[:id])
-  end
-  
   def edit_depa
     @department=Department.find_by(id: params[:id])
   end
@@ -118,41 +116,10 @@ class UsersController < ApplicationController
     
     if @department.save
       flash[:notice] = "配属部署を編集しました"
-      redirect_to("/control/edit/#{@department.user.id}")
+      redirect_to("/show/#{@department.user.id}")
     else
       render("users/edit_depa")
     end
   end
   
-  def update_c
-    @user = User.find_by(id: params[:id])
-    @user.name = params[:name]
-    @user.address = params[:address]
-    
-    if params[:department5] != nil
-      if params[:department5] == "社長" || params[:department5] == "人事部" || params[:position5] == "部長"
-        @user.authority = "1"
-      end
-      
-      @department5 = Department.new(
-        user_id: @user.id,
-        department: params[:department5],
-        position: params[:position5]
-        )
-      
-      if @user.save && @department5.save
-        flash[:notice] = "社員情報を編集しました"
-        redirect_to("/show/#{@user.id}")
-      else
-        render("users/edit_c")
-      end
-    else
-      if @user.save
-        flash[:notice] = "社員情報を編集しました"
-        redirect_to("/show/#{@user.id}")
-      else
-        render("users/edit_c")
-      end
-    end
-  end
 end

@@ -10,7 +10,7 @@
             <h1><%= @user.name %></h1>
             <a><%= p format("%04d",@user.number) %></a><br>
             <% @user.departments.each do |department| %>
-                <a><%= department.department %> <%= department.position %></a><br>
+                <i class="link"><%= department.department %> <%= department.position %>　　　　　　<a><%= link_to("変更","/depa/edit/#{department.id}") %>　　<%= link_to("削除","/destroy/#{department.id}", {method: "post"}) %></a></i><br>
             <% end %>
             <p><%= @user.address %></p>
             
