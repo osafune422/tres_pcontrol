@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="changebox">
+                <div class="inchangebox">
+                    <li><a href="/">登録業務一覧</a></li>
+                                      
+                </div>
+            </div>
+            
+            <div id="rightColumn">
+                <div class="jobs-index-item">
+                    <% @jobs.each do |job| %>
+                        <p><%= job.start %>　～　<%= job.finish %></p>
+                        <p><a>場所：</a><%= job.place %></p>
+                    <% end %>
+                </div>
+            </div>
+            
+        </div>
+    </body>
+
+

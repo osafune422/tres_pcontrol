@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="changebox">
+                <div class="inchangebox">
+                    <li><a href="/">登録業務一覧</a></li>
+                                      
+                </div>
+            </div>
+            
+            <div id="rightColumn">
+                <h1><%= @job.user.name %></h1>
+                <p><%= @job.start %>　～　<%= @job.finish %></p>
+                <p><a>場所：</a><%= @job.place %></p>
+                <a>業務内容</a><br>
+                <p><%= @job.description %></p>
+            </div>
+            
+        </div>
+    </body>
+
+

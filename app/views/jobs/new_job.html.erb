@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <h3>業務内容登録</h3>
+
+            <% @job.errors.full_messages.each do |message| %>
+                <div class="form-error">
+                    <%= message %>
+                </div>
+            <% end %>
+
+            <%= form_tag("/work") do %>
+                <h2><%= @current_user.name %></h2>
+                <a>業務開始日</a><br>
+                <input type=date name="start" value="<% @job.start %>"><br>
+                <a>業務完了予定日</a><br> 
+                <input type=date name="finish" value="<% @job.finish %>"><br><br>
+                <a>場所</a><br>
+                <input class=signup_address name="place" value="<% @job.place %>"><br><br>
+                <a>業務内容</a><br>
+                <textarea name="description"><%= @job.description %></textarea><br>
+    
+                <input class="button_signup" type="submit" value="登録">
+            <% end %>
+    
+            <%= link_to("戻る", "/mypage") %>
+        </div>
+    </body>
+
+

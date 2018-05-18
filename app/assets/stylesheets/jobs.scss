@@ -1,0 +1,36 @@
+// Place all the styles related to the jobs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/* new_job */
+textarea{
+    width: 90%;
+    height: 400px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* show_job */
+#rightColumn{
+    width: 65%;
+    height: 100%;
+//    background-color: black;
+}
+
+#rightColumn a{
+    font-size: 12px;
+    color: gray;
+}
+
+/* index_job */
+.jobs-index-item {
+  padding: 20px 30px;
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 0 2px 6px #c1ced7;
+  position:relative;
+  transition:all 0.4s;
+}
+.posts-index-item:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+

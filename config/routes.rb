@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'jobs/show/:id', to:'jobs#show_job'
+  get 'jobs/new', to:'jobs#new_job'
+  post 'work', to:'jobs#create_job'
+  get 'index/:id', to:'jobs#index_job'
+  
   get 'mypage', to:'users#mypage'
   get 'index', to:'users#index'
   get 'show/:id', to:'users#show'

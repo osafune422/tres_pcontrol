@@ -3,6 +3,6 @@ class Department < ApplicationRecord
     
     # user_idのエラー条件
     validates :user_id, {presence: true}
-    # numberのエラー条件
+    # departmentのエラー条件
     validates :department, {presence: true}
 end
