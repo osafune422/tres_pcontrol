@@ -29,4 +29,8 @@ class JobsController < ApplicationController
     @user = User.find_by(id: params[:id])
     @jobs = @user.jobs
   end
+  
+  def index_all
+    @jobs = Job.all.order("updated_at ASC")
+  end
 end

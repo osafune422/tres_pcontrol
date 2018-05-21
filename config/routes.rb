@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   get 'jobs/new', to:'jobs#new_job'
   post 'work', to:'jobs#create_job'
   get 'index/:id', to:'jobs#index_job'
+  get 'jobs/index', to:'jobs#index_all'
   
   get 'mypage', to:'users#mypage'
+  post 'remark', to:'users#remark'
   get 'index', to:'users#index'
   get 'show/:id', to:'users#show'
   get 'edit', to:'users#edit'

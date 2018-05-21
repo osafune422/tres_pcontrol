@@ -1,10 +1,37 @@
 class UsersController < ApplicationController
+  require 'date'
   before_action :authenticate_user, {only:[:mypage, :edit, :new]}       #ログインなしの時
   before_action :forbid_login_user, {only:[:login_form, :login]}       #ログインありの時
   before_action :ensure_correct_user, {only:[:new, :create, :index, :show, :destroy, :edit_depa, :update_depa]}      #管理者でないログインの時
   
   def mypage
     @user = User.find_by(id: @current_user.id)
+    @attends = @user.attends.order("date ASC")
+#    @attends = @attends.where(start: now.beginning_of_month..now.end_of_month)
+  end
+  
+  def remark
+    if params[:date] == nil
+      params[:date] = Date.today
+    end
+    
+    if Attend.find_by(user_id: @current_user.id, date: params[:date])
+      @attend = Attend.find_by(user_id: @current_user.id, date: params[:date])
+      @attend.remark = params[:remark]
+    else
+      @attend = Attend.new(
+        user_id: @current_user.id,
+        date: params[:date],
+        remark: params[:remark]
+        )
+    end
+    
+    if @attend.save
+      flash[:notice] = "備考を登録しました"
+      redirect_to("/mypage")
+    else
+      render("users/mypage")
+    end
   end
   
   def new

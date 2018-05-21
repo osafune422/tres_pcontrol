@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  start: 2018-05-21 03:15:56
+  finish: 2018-05-21 03:15:56
+  remark: MyString
+  rest: 1
+  sum: 1
+
+two:
+  user_id: 1
+  start: 2018-05-21 03:15:56
+  finish: 2018-05-21 03:15:56
+  remark: MyString
+  rest: 1
+  sum: 1

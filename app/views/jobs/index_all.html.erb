@@ -16,8 +16,9 @@
                 <br>
                 <div class="jobs-index-item">
                     <% @jobs.each do |job| %>
-                        <p><a class="index-item-link" href="<%= "/jobs/show/#{job.id}" %>"><%= job.start %>　～　<%= job.finish %></a></p>
-                        <p><%= job.description.truncate(10) %>　　<a class="gray">場所：</a><%= job.place.truncate(10) %></p>
+                        <a class="index-item-link" href="<%= "/jobs/show/#{job.id}" %>"><%= job.start %>　～　<%= job.finish %>　　　　　　　　　　　　　　　　<%= job.user.name %></a><br>
+                        <a><%= job.description.truncate(25) %></a><br>
+                        <a><a class="gray">場所：</a><%= job.place.truncate(25) %></a>
                     <% end %>
                 </div>
             </div>

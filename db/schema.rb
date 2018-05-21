@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_18_080115) do
+ActiveRecord::Schema.define(version: 2018_05_21_071300) do
+
+  create_table "attends", force: :cascade do |t|
+    t.integer "user_id"
+    t.time "start"
+    t.time "finish"
+    t.string "remark"
+    t.integer "rest"
+    t.integer "sum"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "date"
+  end
 
   create_table "departments", force: :cascade do |t|
     t.integer "user_id"

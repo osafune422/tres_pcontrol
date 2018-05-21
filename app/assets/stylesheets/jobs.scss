@@ -16,21 +16,34 @@ textarea{
 //    background-color: black;
 }
 
-#rightColumn a{
+.gray{
     font-size: 12px;
     color: gray;
 }
 
 /* index_job */
 .jobs-index-item {
-  padding: 20px 30px;
-  background-color: white;
-  overflow: hidden;
-  box-shadow: 0 2px 6px #c1ced7;
-  position:relative;
-  transition:all 0.4s;
+    padding: 10px 30px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 2px 6px #c1ced7;
+    position:relative;
+    transition:all 0.4s;
 }
-.posts-index-item:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+
+.index-item-link {
+    text-decoration: none;
+    font-size:15px;
+    color:black;
+    display: block;
 }
+//.index-item-link:hover {
+//    color: salmon;
+//}
+
+
+
+
+
+
 

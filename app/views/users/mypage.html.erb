@@ -8,9 +8,11 @@
             <div class="changebox">
                 <div class="inchangebox">
                     <% if @current_user.authority == 1 %>
+                        <li><a href="/edit">my情報編集</a></li>
                         <li><a href="/index">社員一覧</a></li>
                     <% else %>
                         <li><a href="/edit">編集</a></li>
+                        <li><a href="<%= "/index/#{@current_user.id}" %>">職務一覧</a></li>
                     <% end %>                    
                 </div>
             </div>
@@ -21,6 +23,57 @@
             <% end %>
             <p><%= @current_user.address %></p>
             
+            <div class="attend-input">
+                <%= link_to("/follow/destroy/#{@user.id}", {method: "post"}) do %>
+                    <button class="start">出勤</button>
+                <% end %>　　　　　
+                <%= link_to("/follow/destroy/#{@user.id}", {method: "post"}) do %>
+                    <button class="finish">退勤</button>
+                <% end %>
+                <br><br>
+                <%= form_tag("/remark", {method: :post}) do %>
+                    <input type=date name="date"><br>
+                    <input type="radio" name="remark" value="有給">有給<br>
+                    <input type="radio" name="remark" value="フレックス">フレックス<br>
+                    <input type="radio" name="remark" value="遅刻">遅刻<br>
+                    <input type="radio" name="remark" value="早退">早退<br>
+                    
+                    <input class="radio-input" type="submit" value="登録">
+                <% end %>
+            </div>
+            
+            <table border="1px" cellpadding="10px" style="border-collapse: collapse;">
+                <tr bgcolor="silver">
+                    <th>日付</th>
+                    <th>始業時刻</th>
+                    <th>終業時刻</th>
+                    <th>備考</th>
+                </tr>
+                <% @attends.each do |attend| %>
+                    <tr>
+                        <% if attend.remark == "有給" %>
+                            <td><%= attend.date %></td>
+                            <td></td>
+                            <td></td>
+                            <td><%= attend.remark %></td>
+                        <% else %>
+                            <td><%= attend.date %></td>
+                            <td><%= show_time(attend[:start]) %></td>
+                            <% if attend.finish == nil %>
+                                <td></td>
+                            <% else %>
+                                <td><%= show_time(attend[:finish]) %></td>
+                            <% end %>
+                            <% if attend.remark == nil %>
+                                <td></td>
+                            <% else %>
+                                <td><%= attend.remark %></td>
+                            <% end %>
+                        <% end %>
+                        <td>削除</td>
+                    </tr>
+                <% end %>
+            </table>
             
         </div>
     </body>
