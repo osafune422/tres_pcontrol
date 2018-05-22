@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  get 'attendall/pre6/:id', to:'attends#attendall_pre6'
+  get 'attendall/pre5/:id', to:'attends#attendall_pre5'
+  get 'attendall/pre4/:id', to:'attends#attendall_pre4'
+  get 'attendall/pre3/:id', to:'attends#attendall_pre3'
+  get 'attendall/pre2/:id', to:'attends#attendall_pre2'
+  get 'attendall/pre1/:id', to:'attends#attendall_pre1'
+  get 'attendall/:id', to:'attends#attendall'
+  get 'attendall/next1/:id', to:'attends#attendall_next1'
+  get 'attendall/next2/:id', to:'attends#attendall_next2'
+  get 'attendall/next3/:id', to:'attends#attendall_next3'
+  get 'attendall/next4/:id', to:'attends#attendall_next4'
+  get 'attendall/next5/:id', to:'attends#attendall_next5'
+  get 'attendall/next6/:id', to:'attends#attendall_next6'
+  
   get 'jobs/show/:id', to:'jobs#show_job'
   get 'jobs/new', to:'jobs#new_job'
   post 'work', to:'jobs#create_job'
@@ -6,6 +20,9 @@ Rails.application.routes.draw do
   get 'jobs/index', to:'jobs#index_all'
   
   get 'mypage', to:'users#mypage'
+  post 'clockon', to:'users#clockon'
+  post 'clockout', to:'users#clockout'
+  post 'attend/destroy/:id', to:'users#destroy_attend'
   post 'remark', to:'users#remark'
   get 'index', to:'users#index'
   get 'show/:id', to:'users#show'

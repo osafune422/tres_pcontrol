@@ -6,15 +6,43 @@ class UsersController < ApplicationController
   
   def mypage
     @user = User.find_by(id: @current_user.id)
-    @attends = @user.attends.order("date ASC")
+    @attends = @user.attends.order("date DESC")
 #    @attends = @attends.where(start: now.beginning_of_month..now.end_of_month)
   end
   
-  def remark
-    if params[:date] == nil
-      params[:date] = Date.today
+  def clockon
+    @attend=Attend.new(
+      user_id: @current_user.id,
+      date: Date.today,
+      start: Time.now
+      )
+      
+    if @attend.save
+      flash[:notice] = "出勤登録が完了しました"
+      redirect_to("/mypage")
+    else
+      render("users/mypage")
     end
-    
+  end
+  
+  def clockout
+    if Attend.find_by(user_id: @current_user.id, date: Date.today)
+      @attend = Attend.find_by(user_id: @current_user.id, date: Date.today)
+      @attend.finish = Time.now
+      @attend.sum = @attend.finish - @attend.start - @attend.rest
+      
+      if @attend.save
+        flash[:notice] = "出勤登録が完了しました"
+        redirect_to("/mypage")
+      else
+        render("users/mypage")
+      end
+    else
+      render("users/mypage")
+    end
+  end
+  
+  def remark
     if Attend.find_by(user_id: @current_user.id, date: params[:date])
       @attend = Attend.find_by(user_id: @current_user.id, date: params[:date])
       @attend.remark = params[:remark]
@@ -25,13 +53,21 @@ class UsersController < ApplicationController
         remark: params[:remark]
         )
     end
-    
+      
     if @attend.save
       flash[:notice] = "備考を登録しました"
       redirect_to("/mypage")
     else
       render("users/mypage")
     end
+    
+  end
+  
+  def destroy_attend
+    @attend = Attend.find_by(id: params[:id])
+    @attend.destroy
+    flash[:notice] = "勤務データを削除しました"
+    redirect_to("/mypage")
   end
   
   def new

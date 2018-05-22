@@ -24,13 +24,14 @@
             <p><%= @current_user.address %></p>
             
             <div class="attend-input">
-                <%= link_to("/follow/destroy/#{@user.id}", {method: "post"}) do %>
+                <%= link_to("/clockon", {method: "post"}) do %>
                     <button class="start">出勤</button>
                 <% end %>　　　　　
-                <%= link_to("/follow/destroy/#{@user.id}", {method: "post"}) do %>
+                <%= link_to("/clockout", {method: "post"}) do %>
                     <button class="finish">退勤</button>
                 <% end %>
                 <br><br>
+                <a>※日付を忘れずに入力してください</a><br>
                 <%= form_tag("/remark", {method: :post}) do %>
                     <input type=date name="date"><br>
                     <input type="radio" name="remark" value="有給">有給<br>
@@ -47,15 +48,16 @@
                     <th>日付</th>
                     <th>始業時刻</th>
                     <th>終業時刻</th>
-                    <th>備考</th>
+                    <th>　　備考　　</th>
                 </tr>
+                <% i=1 %>
                 <% @attends.each do |attend| %>
                     <tr>
                         <% if attend.remark == "有給" %>
-                            <td><%= attend.date %></td>
-                            <td></td>
-                            <td></td>
-                            <td><%= attend.remark %></td>
+                            <td bgcolor="mistyrose"><%= attend.date %></td>
+                            <td bgcolor="mistyrose"></td>
+                            <td bgcolor="mistyrose"></td>
+                            <td bgcolor="mistyrose"><%= attend.remark %></td>
                         <% else %>
                             <td><%= attend.date %></td>
                             <td><%= show_time(attend[:start]) %></td>
@@ -70,8 +72,12 @@
                                 <td><%= attend.remark %></td>
                             <% end %>
                         <% end %>
-                        <td>削除</td>
+                        <td class="attend-destroy"><a ><%= link_to("削除","/attend/destroy/#{attend.id}", {method: :post}) %></a></td>
                     </tr>
+                    <% i+=1 %>
+                    <% if i > 10 %>
+                        <% break %>
+                    <% end %>
                 <% end %>
             </table>
             
