@@ -10,19 +10,21 @@
                     <% if @current_user.authority == 1 %>
                         <li><a href="/edit">my情報編集</a></li>
                         <li><a href="/index">社員一覧</a></li>
+                        <li><a href="/attend/index">勤怠管理</a></li>
+                        <li><a href="/signup">新入社員登録</a></li>
                     <% else %>
                         <li><a href="/edit">編集</a></li>
                         <li><a href="<%= "/index/#{@current_user.id}" %>">職務一覧</a></li>
-                    <% end %>                    
+                    <% end %>                     
                 </div>
             </div>
             
             <div id="rightColumn">
                 <br>
-                <button class="attend-button" type="button" onclick="location.href='<%= "pre1/#{@user.id}" %>'">前月</button>
-                <button class="attend-button nextmonth" type="button" onclick="location.href='<%= "next1/#{@user.id}" %>'">翌月</button>
+                <a class="attend-link" href="/attendall/pre1/<%= @user.id %>">前月</a>
+                <a class="attend-link nextmonth" href="/attendall/next1/<%= @user.id %>">翌月</a>
                 <table border="1px" cellpadding="10px" style="border-collapse: collapse;">
-                    <caption><h3><%= @today.month %>月</h3></caption>
+                    <caption><h3><%= @user.name %>(<%= @today.year %>年<%= @today.month %>月)　　</h3></caption>
                     <tr bgcolor="silver">
                         <th>日付</th>
                         <th>始業時刻</th>
@@ -36,22 +38,45 @@
                         <% if @attends.find_by(date:day) %>
                             <% @attend = @attends.find_by(date:day) %>
                             <tr>
-                                <% if @attend.remark == "有給" %>
+                                <% if @attend.remark == "有給(1日)" || @attend.remark == "全休" %>
                                     <% if @attend.date == @today %>
-                                        <td bgcolor="mistyrose" style="color:red"><%= @attend.date %></td>
+                                        <td bgcolor="mistyrose" style="color:red"><%= show_date(@attend[:date]) %></td>
                                     <% else %>
-                                        <td bgcolor="mistyrose"><%= @attend.date %></td>
+                                        <td bgcolor="mistyrose"><%= show_date(@attend[:date]) %></td>
                                     <% end %>
                                     <td bgcolor="mistyrose"></td>
                                     <td bgcolor="mistyrose"></td>
                                     <td bgcolor="mistyrose"></td>
                                     <td bgcolor="mistyrose"></td>
                                     <td bgcolor="mistyrose"><%= @attend.remark %></td>
+                                <% elsif @attend.remark == "有給(半日)" || @attend.remark == "半休" %>
+                                    <% if @attend.date == @today %>
+                                        <td style="color:red"><%= show_date(@attend[:date]) %></td>
+                                    <% else %>
+                                        <td><%= show_date(@attend[:date]) %></td>
+                                    <% end %>
+                                    <td><% if @attend.start != nil %>
+                                            <%= show_time(@attend[:start]) %>
+                                        <% end %></td>
+                                    <% if @attend.finish == nil %>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    <% else %>
+                                        <td><%= show_time(@attend[:finish]) %></td>
+                                        <td><%= @attend.rest/3600 %>時間<%= @attend.rest%3600/60 %>分</td>
+                                        <td><%= @attend.sum/3600 %>時間<%= @attend.sum%3600/60 %>分</td>
+                                        <% sum += @attend.sum %>
+                                    <% end %>
+                                    <td bgcolor="mistyrose">
+                                        <% if @attend.remark != nil %>
+                                            <%= @attend.remark %>
+                                        <% end %></td>
                                 <% else %>
                                     <% if @attend.date == @today %>
-                                        <td style="color:red"><%= @attend.date %></td>
+                                        <td style="color:red"><%= show_date(@attend[:date]) %></td>
                                     <% else %>
-                                        <td><%= @attend.date %></td>
+                                        <td><%= show_date(@attend[:date]) %></td>
                                     <% end %>
                                     <td><%= show_time(@attend[:start]) %></td>
                                     <% if @attend.finish == nil %>
@@ -64,19 +89,22 @@
                                         <td><%= @attend.sum/3600 %>時間<%= @attend.sum%3600/60 %>分</td>
                                         <% sum += @attend.sum %>
                                     <% end %>
-                                    <% if @attend.remark == nil %>
-                                        <td></td>
-                                    <% else %>
-                                        <td><%= @attend.remark %></td>
-                                    <% end %>
+                                    <td>
+                                        <% if @attend.remark != nil %>
+                                            <%= @attend.remark %>
+                                        <% end %></td>
                                 <% end %>
-                                <td class="attend-destroy"><a ><%= link_to("削除","/attend/destroy/#{@attend.id}", {method: :post}) %></a></td>
+                                <% if @current_user.authority == 1 %>
+                                    <td class="attend-destroy"><a><%= link_to("編集","/attend/edit/#{@attend.id}") %></a></td>
+                                <% end %>
+                                <td class="attend-destroy"><a><%= link_to("削除","/attend/destroy/#{@attend.id}", {method: :post}) %></a></td>
                             </tr>
                             
                         <% end %>
                     <% end %>
                     <tr>
                         <td colspan="5" align="right">実働時間合計：<%= sum/3600 %>時間<%= sum%3600/60 %>分</td>
+                        <td class="attend-destroy"><a><%= link_to("有給表示","/confirm/paidholi/#{@user.id}") %></a></td>
                     </tr>
                 </table>
             </div>

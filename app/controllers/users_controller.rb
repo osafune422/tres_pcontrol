@@ -11,11 +11,16 @@ class UsersController < ApplicationController
   end
   
   def clockon
-    @attend=Attend.new(
-      user_id: @current_user.id,
-      date: Date.today,
-      start: Time.now
-      )
+    if Attend.find_by(user_id: @current_user.id, date: Date.today)
+      @attend = Attend.find_by(user_id: @current_user.id, date: Date.today)
+      @attend.start = Time.now
+    else
+      @attend=Attend.new(
+        user_id: @current_user.id,
+        date: Date.today,
+        start: Time.now
+        )
+    end
       
     if @attend.save
       flash[:notice] = "出勤登録が完了しました"
@@ -30,13 +35,17 @@ class UsersController < ApplicationController
       @attend = Attend.find_by(user_id: @current_user.id, date: Date.today)
       @attend.finish = Time.now
       @attend.sum = @attend.finish - @attend.start - @attend.rest
-      
-      if @attend.save
-        flash[:notice] = "出勤登録が完了しました"
-        redirect_to("/mypage")
-      else
-        render("users/mypage")
-      end
+    else
+      @attend=Attend.new(
+        user_id: @current_user.id,
+        date: Date.today,
+        finish: Time.now
+        )
+    end
+    
+    if @attend.save
+      flash[:notice] = "出勤登録が完了しました"
+      redirect_to("/mypage")
     else
       render("users/mypage")
     end
@@ -46,12 +55,24 @@ class UsersController < ApplicationController
     if Attend.find_by(user_id: @current_user.id, date: params[:date])
       @attend = Attend.find_by(user_id: @current_user.id, date: params[:date])
       @attend.remark = params[:remark]
+      
+      if params[:remark] == "有給(1日)"
+        @attend.user.paidholi_sum -= 1
+      elsif params[:remark] == "有給(半日)"
+        @attend.user.paidholi_sum -= 0.5
+      end  
     else
       @attend = Attend.new(
         user_id: @current_user.id,
         date: params[:date],
         remark: params[:remark]
         )
+        
+      if params[:remark] == "有給(1日)"
+        @attend.user.paidholi_sum -= 1
+      elsif params[:remark] == "有給(半日)"
+        @attend.user.paidholi_sum -= 0.5
+      end  
     end
       
     if @attend.save
@@ -140,6 +161,30 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find_by(id:params[:id])
+  end
+  
+  def paidholi
+    @user =User.find_by(id: params[:id])
+    @user.paidholi_sum = params[:paidholi_sum]
+    
+    if @user.save
+      flash[:notice] = "有給日数を編集しました"
+      redirect_to("/show/#{@user.id}")
+    else
+      render("users/show")
+    end
+  end
+  
+  def paidholi_plusten
+    @user = User.find_by(id: params[:id])
+    @user.paidholi_sum += 10
+    
+    if @user.save
+      flash[:notice] = "有給日数を編集しました"
+      redirect_to("/show/#{@user.id}")
+    else
+      render("users/show")
+    end
   end
   
   def edit

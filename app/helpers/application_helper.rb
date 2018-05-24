@@ -4,6 +4,6 @@ module ApplicationHelper
     end
     
     def show_date(time)
-        time.strftime("%Y年%m月%d日")
+        time.strftime("%m-%d")
     end
 end

@@ -13,6 +13,11 @@
 //    background-color:gray;
 }
 
+.holi_sum{
+    font-size: 30px;
+    font-weight: 700;
+}
+
 /* index */
 .depabox{
     float:left;
@@ -37,7 +42,7 @@
 .attend-input{
     position:relative;
     width: 65%;
-    height: 300px;
+    height: 400px;
 //    background-color: gray;
 }
 
@@ -156,7 +161,7 @@
 }
 
 .attend-destroy a{
-    color: black;
+    color: gray;
     text-decoration: none;
 }
 .attend-destroy a:hover{
@@ -168,4 +173,15 @@
     z-index: 3;
 }
 
+/* show */
+.paidholi_edit{
+    border: 0;
+    background: transparent;
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+}
+.paidholi_edit:hover{
+    color: salmon;
+}
 

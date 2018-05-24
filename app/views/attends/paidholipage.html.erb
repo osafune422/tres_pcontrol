@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="changebox">
+                <div class="inchangebox">
+                    <% if @current_user.authority == 1 %>
+                        <li><a href="/edit">my情報編集</a></li>
+                        <li><a href="/index">社員一覧</a></li>
+                    <% else %>
+                        <li><a href="/edit">編集</a></li>
+                        <li><a href="<%= "/index/#{@current_user.id}" %>">職務一覧</a></li>
+                    <% end %>                    
+                </div>
+            </div>
+            
+            <div id="rightColumn">
+                <br>
+                <table border="1px" cellpadding="5px" style="border-collapse: collapse;">
+                    <caption><h3><%= @user.name %>(有給残り<%= @user.paidholi_sum %>日)</h3></caption>
+                    <tr bgcolor="silver">
+                        <th>日付</th>
+                        <th>　　備考　　</th>
+                    </tr>
+                    
+                    <% @attends.each do |attend| %>
+                        <% if attend.remark == "有給(1日)" || attend.remark == "有給(半日)" %>
+                            <tr>
+                                <td><%= attend.date %></td>
+                                <td><%= attend.remark %></td>
+                            </tr>
+                        <% end %>
+                    <% end %>
+                </table>
+            </div>
+        </div>
+    </body>
+
+
+</html>

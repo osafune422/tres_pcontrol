@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1><%= @attend.user.name %></h1>
+            
+            
+                <%= form_tag("/attend/regist/#{@attend.user_id}", {method: :post}) do %>
+                    <input class="inputdate" type=date name="date" value="<%= @attend.date %>"><br>
+                    
+                    <br>
+                    始業時刻：<input class="inputtime" type=time name="start" value="<%= show_time(@attend[:start]) %>"><br>
+                    就業時刻：
+                    <% if @attend.finish != nil %>
+                        <input class="inputtime" type=time name="finish" value="<%= show_time(@attend[:finish]) %>"><br>
+                    <% else %>
+                        <input class="inputtime" type=time name="finish"><br>
+                    <% end %>
+                    
+                    <br>
+                    休憩時間：
+                    <% if @attend.rest != nil %>
+                        <input class="inputrest" name="rest" value="<%= @attend.rest/60 %>">分<br>
+                    <% else %>
+                        <input class="inputrest" name="rest">分<br>
+                    <% end %>
+                    
+                    <br>
+                    <p>
+                    <% if @attend.remark == "有給(1日)" %>
+                        <label><input type="radio" name="remark" value="有給(1日)" checked>有給(1日)</label><br>
+                    <% else %>
+                        <label><input type="radio" name="remark" value="有給(1日)">有給(1日)</label><br>
+                    <% end %>
+                    <% if @attend.remark == "有給(半日)" %>
+                        <label><input type="radio" name="remark" value="有給(半日)" checked>有給(半日)</label><br>
+                    <% else %>
+                        <label><input type="radio" name="remark" value="有給(半日)">有給(半日)</label><br>
+                    <% end %>
+                    <% if @attend.remark == "フレックス" %>
+                        <label><input type="radio" name="remark" value="フレックス" checked>フレックス</label><br>
+                    <% else %>
+                        <label><input type="radio" name="remark" value="フレックス">フレックス</label><br>
+                    <% end %>
+                    <% if @attend.remark == "遅刻" %>
+                        <label><input type="radio" name="remark" value="遅刻" checked>遅刻</label><br>
+                    <% else %>
+                        <label><input type="radio" name="remark" value="遅刻">遅刻</label><br>
+                    <% end %>
+                    <% if @attend.remark == "早退" %>
+                        <label><input type="radio" name="remark" value="早退" checked>早退</label><br>
+                    <% else %>
+                        <label><input type="radio" name="remark" value="早退">早退</label><br>
+                    <% end %>
+                    <% if @attend.remark == "全休" %>
+                        <label><input type="radio" name="remark" value="全休" checked>全休</label><br>
+                    <% else %>
+                        <label><input type="radio" name="remark" value="全休">全休</label><br>
+                    <% end %>
+                    <% if @attend.remark == "半休" %>
+                        <label><input type="radio" name="remark" value="半休" checked>半休</label><br>
+                    <% else %>
+                        <label><input type="radio" name="remark" value="半休">半休</label><br>
+                    <% end %>
+                    </p>
+                    <%= link_to("/destroy/remark/#{@attend.id}", {method: "post"}) do %>
+                        <button class="radio-input">備考の選択を解除</button>
+                    <% end %>
+                    
+                    
+                    <br><br>
+                    <input class="radio-input" type="submit" value="登録">
+                <% end %>
+            </div>
+            
+        </div>
+    </body>
+
+    
+
+</html>

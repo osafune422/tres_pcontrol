@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="changebox">
+                <div class="inchangebox">
+                    <li><a href="/index">社員一覧</a></li>
+                                      
+                </div>
+            </div>
+            
+            <h1>勤怠更新一覧</h1>
+            <table border="0px" cellpadding="10px" style="border-collapse: collapse;">
+                <tr>
+                    <th>名前</th>
+                    <th>日付</th>
+                    <th>備考</th>
+                    <th>出勤時刻</th>
+                    <th>退勤時刻</th>
+                </tr>
+                <% @users.each do |user| %>
+                    <tr>
+                        <td class="link-name"><a><%= link_to(user.name, "/attendall/#{user.id}") %></a></td>
+                    
+                        <% @attends = user.attends.order("date ASC") %>
+                        <% @attendlasts = @attends.last(2) %>
+                        <% @attendlasts.each do |attendlast| %>
+                            <% if attendlast != nil%>
+                                <td><%= show_date(attendlast[:date]) %></td>
+                                <td><%= attendlast.remark %></td>
+                                <% if attendlast.start == nil %>
+                                    <td></td>
+                                <% else %>
+                                    <td><%= show_time(attendlast[:start]) %></td>
+                                <% end %>
+                                <% if attendlast.finish == nil %>
+                                    <td></td>
+                                <% else %>
+                                    <td><%= show_time(attendlast[:finish]) %></td>
+                                <% end %>
+                            <% end %>
+                            <% break %>
+                        <% end %>
+                    </tr>
+                    <br>
+                <% end %>
+            </table>
+        </div>
+    </body>
+
+
+</html>

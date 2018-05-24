@@ -8,9 +8,13 @@
             <div class="changebox">
                 <div class="inchangebox">
                     <% if @current_user.authority == 1 %>
+                        有給残り　<i class="holi_sum"><%= @current_user.paidholi_sum %></i>　日
                         <li><a href="/edit">my情報編集</a></li>
                         <li><a href="/index">社員一覧</a></li>
+                        <li><a href="/attend/index">勤怠管理</a></li>
+                        <li><a href="/signup">新入社員登録</a></li>
                     <% else %>
+                        有給残り　<i class="holi_sum"><%= @current_user.paidholi_sum %></i>　日
                         <li><a href="/edit">編集</a></li>
                         <li><a href="<%= "/index/#{@current_user.id}" %>">職務一覧</a></li>
                     <% end %>                    
@@ -33,11 +37,14 @@
                 <br><br>
                 <a>※日付を忘れずに入力してください</a><br>
                 <%= form_tag("/remark", {method: :post}) do %>
-                    <input type=date name="date"><br>
-                    <input type="radio" name="remark" value="有給">有給<br>
+                    <input type=date name="date" value="<%= Date.today %>"><br>
+                    <input type="radio" name="remark" value="有給(1日)">有給(1日)<br>
+                    <input type="radio" name="remark" value="有給(半日)">有給(半日)<br>
                     <input type="radio" name="remark" value="フレックス">フレックス<br>
                     <input type="radio" name="remark" value="遅刻">遅刻<br>
                     <input type="radio" name="remark" value="早退">早退<br>
+                    <input type="radio" name="remark" value="全休">全休<br>
+                    <input type="radio" name="remark" value="半休">半休<br>
                     
                     <input class="radio-input" type="submit" value="登録">
                 <% end %>
@@ -53,26 +60,35 @@
                 <% i=1 %>
                 <% @attends.each do |attend| %>
                     <tr>
-                        <% if attend.remark == "有給" %>
+                        <% if attend.remark == "有給(1日)" || attend.remark == "全休" %>
                             <td bgcolor="mistyrose"><%= attend.date %></td>
                             <td bgcolor="mistyrose"></td>
                             <td bgcolor="mistyrose"></td>
                             <td bgcolor="mistyrose"><%= attend.remark %></td>
+                        <% elsif attend.remark == "有給(半日)" || attend.remark == "半休" %>
+                            <td><%= attend.date %></td>
+                            <td>
+                                <% if attend.start != nil %>
+                                    <%= show_time(attend[:start]) %>
+                                <% end %></td>
+                            <td>
+                                <% if attend.finish == nil %>
+                                    <%= show_time(attend[:finish]) %>
+                                <% end %></td>
+                            <td bgcolor="mistyrose"><%= attend.remark %></td>
                         <% else %>
                             <td><%= attend.date %></td>
                             <td><%= show_time(attend[:start]) %></td>
-                            <% if attend.finish == nil %>
-                                <td></td>
-                            <% else %>
-                                <td><%= show_time(attend[:finish]) %></td>
-                            <% end %>
-                            <% if attend.remark == nil %>
-                                <td></td>
-                            <% else %>
-                                <td><%= attend.remark %></td>
-                            <% end %>
+                            <td>
+                                <% if attend.finish != nil %>
+                                    <%= show_time(attend[:finish]) %></td>
+                                <% end %></td>
+                            <td>
+                                <% if attend.remark != nil %>
+                                    <%= attend.remark %>
+                                <% end %></td>
                         <% end %>
-                        <td class="attend-destroy"><a ><%= link_to("削除","/attend/destroy/#{attend.id}", {method: :post}) %></a></td>
+                        <td class="attend-destroy"><a><%= link_to("削除","/attend/destroy/#{attend.id}", {method: :post}) %></a></td>
                     </tr>
                     <% i+=1 %>
                     <% if i > 10 %>

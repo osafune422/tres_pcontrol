@@ -7,18 +7,28 @@
         <div id="wrapper">
             <div class="changebox">
                 <div class="inchangebox">
-                    <li><a href="/index">社員一覧</a></li>
-                                      
+                    <% if @current_user.authority == 1 %>
+                        <li><a href="/edit">my情報編集</a></li>
+                        <li><a href="/index">社員一覧</a></li>
+                        <li><a href="/attend/index">勤怠管理</a></li>
+                        <li><a href="/signup">新入社員登録</a></li>
+                    <% else %>
+                        <li><a href="/edit">編集</a></li>
+                        <li><a href="<%= "/index/#{@current_user.id}" %>">職務一覧</a></li>
+                    <% end %> 
                 </div>
             </div>
             
             <h1><%= @user.name %></h1>
             <a><%= p format("%04d",@user.number) %></a><br>
-            <% @user.departments.each do |department| %>
-                <i class="link"><%= department.department %> <%= department.position %>　　　　　　<a><%= link_to("変更","/depa/edit/#{department.id}") %>　　<%= link_to("削除","/destroy/#{department.id}", {method: "post"}) %></a></i><br>
-            <% end %>
             <p><%= @user.address %></p>
-            
+            <% @user.departments.each do |department| %>
+                <i class="link"><%= department.department %> <%= department.position %>　　　　　　 　<a><%= link_to("変更","/depa/edit/#{department.id}") %>　　<%= link_to("削除","/destroy/#{department.id}", {method: "post"}) %></a></i><br>
+            <% end %>
+            <br><br>
+            <%= form_tag("/paidholi/#{@user.id}", {method: :post}) do %>
+                <i class="link">有給残り<input class="inputrest" name="paidholi_sum" value="<%= @user.paidholi_sum %>">日　　　　　　 　<input class="paidholi_edit" type="submit" value="登録"><a>　　<%= link_to("+10日","/paidholi/10/#{@user.id}", {method: "post"}) %></a></i>
+            <% end %>
             
         </div>
     </body>

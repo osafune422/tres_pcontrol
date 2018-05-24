@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_21_071300) do
+ActiveRecord::Schema.define(version: 2018_05_24_013414) do
 
   create_table "attends", force: :cascade do |t|
     t.integer "user_id"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2018_05_21_071300) do
     t.datetime "updated_at", null: false
     t.integer "authority"
     t.string "password_digest"
+    t.integer "paidholi_sum"
   end
 
 end
