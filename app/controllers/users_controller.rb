@@ -105,8 +105,6 @@ class UsersController < ApplicationController
       )
 
     if @user.save
-      session[:user_id]=@user.id
-      
       @department = Department.new(
         user_id: @user.id,
         department: params[:department],

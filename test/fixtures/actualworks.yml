@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  year: 1
+  month: 1
+  ordistart: 2018-05-25 05:31:08
+  ordifinish: 2018-05-25 05:31:08
+
+two:
+  user_id: 1
+  year: 1
+  month: 1
+  ordistart: 2018-05-25 05:31:08
+  ordifinish: 2018-05-25 05:31:08

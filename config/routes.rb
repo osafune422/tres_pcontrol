@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get 'attendall/next4/:id', to:'attends#attendall_next4'
   get 'attendall/next5/:id', to:'attends#attendall_next5'
   get 'attendall/next6/:id', to:'attends#attendall_next6'
+  get 'attend/signup/:id', to:'attends#input_attend'
+  post 'attend/create/:id', to:'attends#create_attend'
   get 'attend/edit/:id', to:'attends#edit_attend'
   post 'attend/regist/:id', to:'attends#regist_attend'
   post 'destroy/remark/:id', to:'attends#destroy_remark'

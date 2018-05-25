@@ -1,8 +1,39 @@
 class AttendsController < ApplicationController
   require 'date'
   
+  def input_attend
+    @user = User.find(params[:id])
+    @attend = Attend.new
+  end
+  
+  def create_attend
+    @user = User.find(params[:id])
+    @attend = Attend.new(
+      user_id: @user.id,
+      start: params[:start],
+      finish: params[:finish],
+      rest: params[:rest]*60,
+      remark: params[:remark],
+      date: params[:date]
+      )
+    @attend.sum = @attend.finish - @attend.start - @attend.rest  
+    
+    if params[:remark] == "有給(1日)"
+      @user.paidholi_sum -= 1
+    elsif params[:remark] == "有給(半日)"
+      @user.paidholi_sum -= 0.5
+    end
+      
+    if @user.save && @attend.save
+      flash[:notice] = "勤務内容の登録が完了しました"
+      redirect_to("/attendall/#{@user.id}")
+    else
+      render("attends/input_attend")
+    end
+  end
+  
   def edit_attend
-    @attend = Attend.find_by(id: params[:id])
+    @attend = Attend.find(params[:id])
   end
   
   def destroy_remark
@@ -23,7 +54,7 @@ class AttendsController < ApplicationController
   end
   
   def regist_attend
-    @attend = Attend.find_by(id: params[:id])
+    @attend = Attend.find(params[:id])
     @attend.date = params[:date]
     @attend.start = params[:start]
     @attend.finish = params[:finish]
@@ -78,6 +109,8 @@ class AttendsController < ApplicationController
     @days = @today.beginning_of_month..@today.end_of_month
     @user = User.find_by(id: params[:id])
     @attends = @user.attends
+    @acutualwork = Actualwork.find_by(user_id: @user.id, year: @today.year, month: @today.month)
+    
   end
   
   def attendall_next1

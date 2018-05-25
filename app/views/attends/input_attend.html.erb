@@ -5,14 +5,19 @@
     </head>
     <body>
         <div id="wrapper">
-            <h1><%= @attend.user.name %></h1>
+            <h1><%= @user.name %></h1>
             
             
-                <%= form_tag("/attend/regist/#{@attend.id}", {method: :post}) do %>
+                <%= form_tag("/attend/create/#{@user.id}", {method: :post}) do %>
                     <input class="inputdate" type=date name="date" value="<%= @attend.date %>"><br>
                     
                     <br>
-                    始業時刻：<input class="inputtime" type=time name="start" value="<%= show_time(@attend[:start]) %>"><br>
+                    始業時刻：
+                    <% if @attend.start != nil %>
+                        <input class="inputtime" type=time name="start" value="<%= show_time(@attend[:start]) %>"><br>
+                    <% else %>
+                        <input class="inputtime" type=time name="start"><br>
+                    <% end %>
                     就業時刻：
                     <% if @attend.finish != nil %>
                         <input class="inputtime" type=time name="finish" value="<%= show_time(@attend[:finish]) %>"><br>
@@ -66,10 +71,6 @@
                         <label><input type="radio" name="remark" value="半休">半休</label><br>
                     <% end %>
                     </p>
-                    <%= link_to("/destroy/remark/#{@attend.id}", {method: "post"}) do %>
-                        <button class="radio-input">備考の選択を解除</button>
-                    <% end %>
-                    
                     
                     <br><br>
                     <input class="button_signup" type="submit" value="登録">

@@ -16,6 +16,17 @@
     float: right;
 }
 
+.attend-link-newdate{
+    float: center;
+    font-size: 20px;
+    color: gray;
+    text-decoration: none;
+    font-weight: 700;
+}
+.attend-link-newdate:hover{
+    color: salmon;
+}
+
 /*edit_attend*/
 .inputdate {
     font-size: 25px;

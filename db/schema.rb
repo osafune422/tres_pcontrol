@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_24_013414) do
+ActiveRecord::Schema.define(version: 2018_05_25_053108) do
+
+  create_table "actualworks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "year"
+    t.integer "month"
+    t.time "ordistart"
+    t.time "ordifinish"
+    t.integer "attendtime"
+    t.integer "overtime"
+    t.integer "flex"
+    t.integer "flontflex"
+    t.integer "payovertime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "attends", force: :cascade do |t|
     t.integer "user_id"

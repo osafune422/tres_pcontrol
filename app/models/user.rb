@@ -3,6 +3,7 @@ class User < ApplicationRecord
     has_many :departments
     has_many :jobs
     has_many :attends
+    has_many :actualworks
     
     # nameのエラー条件
     validates :name, {presence: true}
