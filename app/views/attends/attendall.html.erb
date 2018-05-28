@@ -109,29 +109,7 @@
                     </tr>
                 </table>
                 
-                <% #@actualworks.each do |acutualwork| %>
-                    <table border="1px" cellpadding="7px" style="border-collapse: collapse;">
-                        <caption><h3><%= @user.name %>(<%= @today.year %>年<%= @today.month %>月実働時間)</h3></caption>
-                        <tr bgcolor="silver">
-                            <th>定時</th>
-                            <th>申請時間</th>
-                            <th>残業時間</th>
-                            <th>フレックス</th>
-                            <th>前フレックス</th>
-                            <th>残業適応時間</th>
-                        </tr>
-                        
-                        <tr>
-                            <td><%= show_time(@acutualwork[:ordistart]) %>~<%= show_time(@acutualwork[:ordifinish]) %></td>
-                            <td><%= @acutualwork.attendtime/3600 %>時間<%= @actualwork.attendtime%3600/60 %>分</td>
-                            <td><%= @acutualwork.overtime/3600 %>時間<%= @actualwork.overtime%3600/60 %>分</td>
-                            <td><%= @acutualwork.flex/3600 %>時間<%= @actualwork.flex%3600/60 %>分</td>
-                            <td><%= @acutualwork.flontflex/3600 %>時間<%= @actualwork.flontflex%3600/60 %>分</td>
-                            <td><%= @acutualwork.payovertime/3600 %>時間<%= @actualwork.payovertime%3600/60 %>分</td>
-                            <td class="attend-destroy"><a>編集</a></td>
-                        </tr>
-                    </table>
-                <% #end %>
+                
             </div>
         </div>
     </body>
